@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Course;
 use App\Models\Score;
+use App\Models\Student;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 
 class ScoreController extends Controller
 {
@@ -14,7 +17,8 @@ class ScoreController extends Controller
      */
     public function index()
     {
-        //
+        $notas = Score::all();
+        return view('notas.index' , compact("notas"));
     }
 
     /**
@@ -24,7 +28,13 @@ class ScoreController extends Controller
      */
     public function create()
     {
-        //
+        //$materias = Course::all();
+        //$estudiantes = Student::all();
+        //return view('notas.crear' , compact("materias", "estudiantes"));
+
+        $materias = Course::all();
+        $estudiantes = Student::all();
+        return view('notas.crear', compact("materias" , "estudiantes"));
     }
 
     /**
@@ -35,7 +45,17 @@ class ScoreController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $nota = new Score();
+        $nota->nota = $request->nota;
+        $nota->student_id = $request->estudiante;
+        $nota->course_id= $request->materia;
+
+        //$materia = Course::find($request->materia);
+        //$estudiante = Student::find($request->estudiante);
+
+        $nota->save();
+        session()->flash("flash.banner" , "Nota Creada de manera satisfactoria");
+        return Redirect::route('notas.index');
     }
 
     /**
