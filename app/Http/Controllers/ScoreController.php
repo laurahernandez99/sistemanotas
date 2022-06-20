@@ -31,10 +31,9 @@ class ScoreController extends Controller
         //$materias = Course::all();
         //$estudiantes = Student::all();
         //return view('notas.crear' , compact("materias", "estudiantes"));
-
-        $materias = Course::all();
         $estudiantes = Student::all();
-        return view('notas.crear', compact("materias" , "estudiantes"));
+        $materias = Course::all();
+        return view('notas.crear', compact("estudiantes" , "materias" , "notas"));
     }
 
     /**
@@ -46,14 +45,11 @@ class ScoreController extends Controller
     public function store(Request $request)
     {
         $nota = new Score();
-        $nota->nota = $request->nota;
         $nota->student_id = $request->estudiante;
         $nota->course_id= $request->materia;
-
-        //$materia = Course::find($request->materia);
-        //$estudiante = Student::find($request->estudiante);
-
-        $nota->save();
+        $nota->nota = $request->nota;
+        
+         $nota->save();
         session()->flash("flash.banner" , "Nota Creada de manera satisfactoria");
         return Redirect::route('notas.index');
     }
@@ -64,9 +60,9 @@ class ScoreController extends Controller
      * @param  \App\Models\Score  $score
      * @return \Illuminate\Http\Response
      */
-    public function show(Score $score)
+    public function show(Score $nota, Student $estudiante , Course $materia)
     {
-        //
+        return view('notas.ver', compact('nota'));
     }
 
     /**
@@ -75,9 +71,11 @@ class ScoreController extends Controller
      * @param  \App\Models\Score  $score
      * @return \Illuminate\Http\Response
      */
-    public function edit(Score $score)
+    public function edit(Score $nota )
     {
-        //
+        $estudiantes = Student::all();
+        $materias = Course::all();
+        return view('notas.edit' , compact('nota', "estudiantes" , "materias"));
     }
 
     /**
@@ -87,9 +85,15 @@ class ScoreController extends Controller
      * @param  \App\Models\Score  $score
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Score $score)
+    public function update(Request $request, Score $nota)
     {
-        //
+        
+        $nota->student_id = $request->estudiante;
+        $nota->course_id= $request->materia;
+        $nota->nota = $request->nota;
+        $nota->save();
+        session()->flash("flash.banner", "Nota modificada de manera satisfactoria");
+        return Redirect::route('notas.index');
     }
 
     /**
@@ -98,8 +102,10 @@ class ScoreController extends Controller
      * @param  \App\Models\Score  $score
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Score $score)
+    public function destroy(Score $nota)
     {
-        //
+        $nota->delete();
+        session()->flash("flash.banner", "Nota eliminada de manera satisfactoria");
+        return Redirect::route('notas.index');
     }
 }

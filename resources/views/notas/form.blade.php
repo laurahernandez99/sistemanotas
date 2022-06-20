@@ -1,6 +1,6 @@
 @csrf
 <div class="block">
-<x-jet-label for="materia" value="{{ __('Nombre Materia')}}"/><br>
+<x-jet-label for="materia" value="{{ __('Nombre Materia')}}"/>
 <select 
 class="form-select appearance-none
 block 
@@ -27,7 +27,7 @@ name="materia">
 
 
 <div class="block">
-<x-jet-label for="estudiante" value="{{ __('Nombre Estudiante')}}"/><br>
+<x-jet-label for="estudiante" value="{{ __('Nombre Estudiante')}}"/>
 <select 
 class="form-select appearance-none
 block 
@@ -53,7 +53,7 @@ name="estudiante">
 </div>
 
 <div class="block">
-<x-jet-label for="nota" value="{{ __('Nota Estudiante')}}"/><br>
+<x-jet-label for="nota" value="{{ __('Nota Estudiante')}}"/>
 <x-jet-input name="nota" class="block mt-1 w-full" type="number"/>
 </div>
 <div class="flex justify-center">

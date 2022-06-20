@@ -36,6 +36,10 @@
                                                 class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
                                                 Nota
                                             </th>
+                                            <th scope="col"
+                                                class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                                                Acciones
+                                            </th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -51,6 +55,24 @@
                                                 <td
                                                     class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                                                     {{ $nota->nota }}
+                                                </td>
+                                                <td
+                                                    class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                                    <a href="{{ route('notas.show', $nota) }}">
+                                                        <x-jet-button>Ver</x-jet-button>
+                                                    </a>
+                                                    <a href="{{ route('notas.edit', $nota) }}">
+                                                        <x-jet-button>Editar</x-jet-button>
+                                                    </a> 
+                                                    
+                                                    <form action="{{ route('notas.destroy', $nota) }}"
+                                                        method="post">
+                                                        @method('DELETE')
+                                                        @csrf
+                                                        <x-jet-danger-button type="submit" class="display:containt">Eliminar
+                                                        </x-jet-danger-button>
+                                                    
+                                                    </form>
                                                 </td>
                                             </tr>
                                         @endforeach
